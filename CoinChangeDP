@@ -1,0 +1,41 @@
+package com.revise.test;
+
+public class CoinChangeGraph {
+
+	public static int[] loadInitialValue(int[] coins, int amount) {
+		int[] minArray = new int[amount];
+		for (int i = 0; i < amount; i++) {
+
+			if (i == 0)
+				minArray[i] = 0;
+			else
+				minArray[i] = amount;
+		}
+
+		return minArray;
+	}
+
+	public static int coinChange(int[] coins, int amount) {
+		int[] minArray = loadInitialValue(coins, amount + 1);
+		int min = -1;
+		for (int i = 1; i <= amount; i++) {
+			for (int j = 0; j < coins.length; j++) {
+				if (i >= coins[j] && i <= amount) {
+					min = Math.min(minArray[i - coins[j]] + 1, minArray[i]);
+					minArray[i] = min;
+				}
+
+			}
+
+		}
+		return minArray[amount] == amount + 1 ? -1 : minArray[amount];
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int coins[] = new int[] { 2 };
+		int sum = 3;
+		System.out.println(coinChange(coins, sum));
+	}
+
+}
